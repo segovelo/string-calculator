@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 public class StringCalculator {
 	public static void main(String[] args) {
 		
-		String[] numbers= {"3, 4,,5","1\r\n2\n3,4","","2,-4,3,-5", "//#\n1#2#3#4", "//:\n1:2:3:4"};
+		String[] numbers= {"3, 4,,5","1\r\n2\n3,4","","2,-4,3,-5", "//#\n1#2#3#4", "//:\n1:2:3:4", "1001,2" };
 		for(String number : numbers) {
 			    System.out.println("Result = " + add(number));
 		}		
@@ -40,7 +40,7 @@ public class StringCalculator {
 					Integer value = Integer.valueOf(number.strip());
 					try {
 						if(value < 0) throw new NegativesNotAllowedException(value);
-						if(value < 1000)
+						if(value < 1001)
 							result += Integer.valueOf(number.strip());
 					} catch (NegativesNotAllowedException exception) {
 						System.out.println(String.format("Negatives Not Allowed: %s", exception.getNumber()));
