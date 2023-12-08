@@ -39,8 +39,9 @@ public class StringCalculator {
 				if (StringUtils.isNotBlank(number)) {
 					Integer value = Integer.valueOf(number.strip());
 					try {
-						if(value < 0) throw new NegativesNotAllowedException(value);							
-						result += Integer.valueOf(number.strip());
+						if(value < 0) throw new NegativesNotAllowedException(value);
+						if(value < 1000)
+							result += Integer.valueOf(number.strip());
 					} catch (NegativesNotAllowedException exception) {
 						System.out.println(String.format("Negatives Not Allowed: %s", exception.getNumber()));
 						negativeValues.add(value);
