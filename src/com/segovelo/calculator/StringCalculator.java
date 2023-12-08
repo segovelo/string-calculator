@@ -1,5 +1,9 @@
 package com.segovelo.calculator;
 
+import java.util.Scanner;
+
+import org.apache.commons.lang3.StringUtils;
+
 /** 
 * 8 Dec 2023
 * @Javadoc TODO 
@@ -7,5 +11,22 @@ package com.segovelo.calculator;
 * @author Segovelo  **/
 
 public class StringCalculator {
+	public static void main(String[] args) {
+		Scanner sc= new Scanner(System.in);
+		String str= "";
+		do {
+			System.out.print("Enter a string: ");  
+			str= sc.nextLine(); 
+			System.out.println("Result = " + add(str));
+		} while("exit" != str);
+	}
+	public static Integer add(String numbers) {
+		if (StringUtils.isNotBlank(numbers)) {
+			Integer result = Integer.valueOf(numbers);
+			return result;
+						
+		}
+		else return Integer.valueOf("0");
+	}
 
 }
