@@ -16,7 +16,8 @@ public class StringCalculator {
 		String str= "";
 		do {
 			System.out.print("Enter a string: ");  
-			str= sc.nextLine();
+			//str= sc.nextLine();
+			str = "1\r\n2\n3,4";
 			if(!"exit".equalsIgnoreCase(str))
 			    System.out.println("Result = " + add(str));
 		} while(!"exit".equalsIgnoreCase(str));
@@ -24,7 +25,7 @@ public class StringCalculator {
 	}
 	public static Integer add(String numbers) {
 		if (StringUtils.isNotBlank(numbers)) {
-			String[] numberArray = numbers.split(",");
+			String[] numberArray = numbers.split(",|\r?\n|\r");
 			Integer result = 0;
 			for ( String number : numberArray) {
 				if (StringUtils.isNotBlank(number))
@@ -33,7 +34,7 @@ public class StringCalculator {
 			return result;
 						
 		}
-		else return 0;// Integer.valueOf("0");
+		else return 0;
 	}
 
 }
