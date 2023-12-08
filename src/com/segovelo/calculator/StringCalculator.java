@@ -16,21 +16,24 @@ public class StringCalculator {
 		String str= "";
 		do {
 			System.out.print("Enter a string: ");  
-			str= sc.nextLine(); 
-			System.out.println("Result = " + add(str));
-		} while("exit" != str);
+			str= sc.nextLine();
+			if(!"exit".equalsIgnoreCase(str))
+			    System.out.println("Result = " + add(str));
+		} while(!"exit".equalsIgnoreCase(str));
+		sc.close();
 	}
 	public static Integer add(String numbers) {
 		if (StringUtils.isNotBlank(numbers)) {
 			String[] numberArray = numbers.split(",");
 			Integer result = 0;
 			for ( String number : numberArray) {
-			   result += Integer.valueOf(number);
+				if (StringUtils.isNotBlank(number))
+					result += Integer.valueOf(number.strip());
 			}
 			return result;
 						
 		}
-		else return Integer.valueOf("0");
+		else return 0;// Integer.valueOf("0");
 	}
 
 }
