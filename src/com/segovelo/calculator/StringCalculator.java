@@ -1,6 +1,8 @@
 package com.segovelo.calculator;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -12,20 +14,23 @@ import org.apache.commons.lang3.StringUtils;
 
 public class StringCalculator {
 	public static void main(String[] args) {
-		Scanner sc= new Scanner(System.in);
-		String str= "";
-		do {
-			System.out.print("Enter a string: ");  
-			//str= sc.nextLine();
-			str = "1\r\n2\n3,4";
-			if(!"exit".equalsIgnoreCase(str))
-			    System.out.println("Result = " + add(str));
-		} while(!"exit".equalsIgnoreCase(str));
-		sc.close();
+		
+		String[] numbers= {"3, 4,,5","1\r\n2\n3,4","","  ", "//#\n1#2#3#4", "//:\n1:2:3:4"};
+		for(String number : numbers) {
+			    System.out.println("Result = " + add(number));
+		}		
 	}
+	
 	public static Integer add(String numbers) {
 		if (StringUtils.isNotBlank(numbers)) {
-			String[] numberArray = numbers.split(",|\r?\n|\r");
+			Pattern pattern = Pattern.compile("//.\n.+");
+			Matcher matcher = pattern.matcher(numbers);
+			String delimiter = ",|\r?\n|\r";
+			if(matcher.matches()) {
+				delimiter = numbers.substring(2,3);
+				numbers = numbers.substring(3);
+			}
+			String[] numberArray = numbers.split(delimiter);
 			Integer result = 0;
 			for ( String number : numberArray) {
 				if (StringUtils.isNotBlank(number))
