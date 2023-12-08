@@ -22,7 +22,11 @@ public class StringCalculator {
 	}
 	public static Integer add(String numbers) {
 		if (StringUtils.isNotBlank(numbers)) {
-			Integer result = Integer.valueOf(numbers);
+			String[] numberArray = numbers.split(",");
+			Integer result = 0;
+			for ( String number : numberArray) {
+			   result += Integer.valueOf(number);
+			}
 			return result;
 						
 		}
