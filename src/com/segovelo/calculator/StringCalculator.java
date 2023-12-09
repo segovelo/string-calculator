@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /** 
@@ -17,7 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 public class StringCalculator {
 	public static void main(String[] args) {
 		
-		String[] numbers= {"3, 4,,5","1\r\n2\n3,4","","2,-4,3,-5", "//#\n1#2#3#4", "//:\n1:2:3:4", "1001,2" };
+		String[] numbers= {"//[|||]\n1|||2|||3", "//[:::]\n1:::2:::3","//[???]\n1???2???3","3, 4,,5","1\r\n2\n3,4","","2,-4,3,-5", "//#\n1#2#3#4", "//:\n1:2:3:4", "1001,2" };
 		for(String number : numbers) {
 			    System.out.println("Result = " + add(number));
 		}		
@@ -28,12 +29,19 @@ public class StringCalculator {
 			List<Integer> negativeValues = new ArrayList<Integer>();
 			Pattern pattern = Pattern.compile("//.\n.+");
 			Matcher matcher = pattern.matcher(numbers);
+			Pattern patternMult = Pattern.compile("//\\[(.)\\1+\\]\n.+");
+			Matcher matcherMult = patternMult.matcher(numbers);
 			String delimiter = ",|\r?\n|\r";
 			if(matcher.matches()) {
 				delimiter = numbers.substring(2,3);
 				numbers = numbers.substring(3);
+			} else if (matcherMult.matches()) {
+				delimiter = numbers.substring(3,numbers.indexOf("]")); 
+				numbers = numbers.substring(numbers.indexOf("]")+2);
+				numbers = numbers.replaceAll("(.)\\1+", "$1");
+				delimiter = delimiter.substring(0,1);
 			}
-			String[] numberArray = numbers.split(delimiter);
+			String[] numberArray = numbers.split("\\"+delimiter);
 			Integer result = 0;
 			for ( String number : numberArray) {
 				if (StringUtils.isNotBlank(number)) {
@@ -48,7 +56,8 @@ public class StringCalculator {
 					}
 				}
 			}
-			System.out.println(String.format("Negatives Not Allowed : %s",negativeValues.toString()));
+			if(!negativeValues.isEmpty())
+				System.out.println(String.format("Negatives Not Allowed : %s",negativeValues.toString()));
 			return result;
 						
 		}
